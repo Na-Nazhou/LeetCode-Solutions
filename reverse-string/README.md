@@ -1,3 +1,4 @@
+[Discussion Post (created on 30/11/2020 at 1:25)](https://leetcode.com/problems/reverse-string/solution/)  
 <h2>unknown-problem</h2><h3>Easy</h3><hr><div><p>Write a function that reverses a string. The input string is given as an array of characters <code>char[]</code>.</p>
 
 <p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array&nbsp;<a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank">in-place</a></strong> with O(1) extra memory.</p>
