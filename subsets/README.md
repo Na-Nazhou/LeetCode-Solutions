@@ -1,3 +1,4 @@
+[Discussion Post (created on 1/0/2021 at 13:3)](https://leetcode.com/problems/subsets/solution/)  
 <h2>78. Subsets</h2><h3>Medium</h3><hr><div><p>Given an&nbsp;integer array&nbsp;<code>nums</code>, return <em>all possible subsets (the power set)</em>.</p>
 
 <p>The solution set must not contain duplicate subsets.</p>
