@@ -1,3 +1,4 @@
+[Discussion Post (created on 12/0/2021 at 9:43)](https://leetcode.com/problems/merge-sorted-array/solution/)  
 <h2>unknown-problem</h2><h3>Easy</h3><hr><div><p>Given two sorted integer arrays <em>nums1</em> and <em>nums2</em>, merge <em>nums2</em> into <em>nums1</em> as one sorted array.</p>
 
 <p><strong>Note:</strong></p>
