@@ -1,3 +1,4 @@
+[Discussion Post (created on 5/1/2021 at 12:23)](https://leetcode.com/problems/valid-parentheses/solution/)  
 <h2>20. Valid Parentheses</h2><h3>Easy</h3><hr><div><p>Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.</p>
 
 <p>An input string is valid if:</p>
