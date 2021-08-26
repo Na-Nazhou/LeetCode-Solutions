@@ -4,7 +4,7 @@ class Solution {
     
     public int maxProfit(int[] prices) {
         int currMinPrice = Integer.MAX_VALUE;
-        int currMaxProfit = Integer.MIN_VALUE;
+        int currMaxProfit = 0;
         
         for (int price : prices) {
             if (price > currMinPrice) {
@@ -14,6 +14,6 @@ class Solution {
             }
         }
         
-        return Math.max(currMaxProfit, 0);
+        return currMaxProfit;
     }
 }
