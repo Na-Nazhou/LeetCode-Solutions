@@ -9,21 +9,17 @@ class Solution {
         // { a: 3, b: 6, c: 5}, start = 5, currMax = 3, abc
         // { a: 3, b: 7, c: 5}, start = 7, currMax = 2, bc
         Map<Character, Integer> map = new HashMap<>();
-        char[] arr = s.toCharArray();
-        for (int i = 0; i < arr.length; i++) {
-            char ch = arr[i];
+        for (int end = 0; end < s.length(); end++) {
+            char ch = s.charAt(end);
             if (map.containsKey(ch)) {
-                int index = map.get(ch);
-                if (index >= start) {
-                    currMax =  Math.max(currMax, i - start);
+                if (map.get(ch) >= start) {
                     start = map.get(ch) + 1;
                 }
             }
             
-            map.put(ch, i);
+            currMax =  Math.max(currMax, end - start + 1);
+            map.put(ch, end);
         }
-        
-        currMax =  Math.max(currMax, arr.length - start);
         
         return currMax;
     }
