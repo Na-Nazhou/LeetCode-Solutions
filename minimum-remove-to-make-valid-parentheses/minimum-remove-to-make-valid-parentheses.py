@@ -1,23 +1,38 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        stack = []
-        res = []
-        for i, c in enumerate(s):
-            if c != '(' and c != ')':
-                res.append(c)
-            if c == '(':
-                stack.append(len(res))
-                res.append(c)
-            if c == ')':
-                if not stack:
-                    continue
-                stack.pop()
-                res.append(c)
-        
-        stack = set(stack)
+        bal = 0
         ans = []
-        for i, c in enumerate(res):
-            if i in stack:
+        
+        # Remove extra closing brackets
+        for c in s:
+            if c == ')' and bal == 0:
                 continue
+            
+            if c == '(':
+                bal += 1
+                
+            if c == ')':
+                bal -= 1
+            
             ans.append(c)
+        
+        s = "".join(ans)
+        bal = 0
+        ans = []
+        
+        # Remove extra open brackets
+        for i in range(len(s) - 1, -1, -1):
+            c = s[i]
+            if c == '(' and bal == 0:
+                continue
+            
+            if c == ')':
+                bal += 1
+            
+            if c == '(':
+                bal -= 1
+            
+            ans.append(c)
+                
+        ans.reverse()
         return "".join(ans)
