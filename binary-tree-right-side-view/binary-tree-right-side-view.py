@@ -6,23 +6,25 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
         if root is None:
-            return []
+            return res
         
         q = deque()
         q.append(root)
-        ans = []
         
         while q:
             size = len(q)
-            
             for i in range(size):
                 node = q.popleft()
+                
+                if i == size - 1:
+                    res.append(node.val)
+                
                 if node.left is not None:
                     q.append(node.left)
+                
                 if node.right is not None:
                     q.append(node.right)
-                if i == size - 1:
-                    ans.append(node.val)
         
-        return ans
+        return res
