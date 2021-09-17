@@ -1,13 +1,17 @@
 class Solution:
+    
     def validPalindrome(self, s: str) -> bool:
-        start = 0
-        end = len(s) - 1
-        while start < end:
-            if s[start] == s[end]:
-                start += 1
-                end -= 1
-            else:
-                remove_left = s[start+1:end+1]
-                remove_right = s[start:end]
-                return remove_left == remove_left[::-1] or remove_right == remove_right[::-1]
+        
+        def is_palindrome(s):
+            return s[::-1] == s
+    
+        i, j = 0, len(s) - 1
+        while i < j:
+            if s[i] == s[j]:
+                i += 1
+                j -= 1
+                continue
+            
+            return is_palindrome(s[i+1:j+1]) or is_palindrome(s[i:j])
+        
         return True
