@@ -2,27 +2,25 @@ class Solution:
 
     def __init__(self, w: List[int]):
         self.arr = []
-        self.total = 0
-        for x in w:
-            self.total += x
-            self.arr.append(self.total)
+        curr_sum = 0
+        for num in w:
+            curr_sum += num
+            self.arr.append(curr_sum)
 
     def pickIndex(self) -> int:
-        x = random.randint(1, self.total)
+        index = random.randint(1, self.arr[-1])
+        # Find the first integer that is >= index
         start = 0
         end = len(self.arr) - 1
-        while start <= end:
+        while start < end:
             mid = (start + end) // 2
-            
-            if self.arr[mid] < x:
+            if self.arr[mid] < index:
                 start = mid + 1
             else:
-                if mid == 0 or self.arr[mid - 1] < x:
-                    return mid
-                else:
-                    end = mid - 1
+                end = mid
         
-        raise ValueError("Invalid")
+        return start
+        
 
 
 # Your Solution object will be instantiated and called as such:
