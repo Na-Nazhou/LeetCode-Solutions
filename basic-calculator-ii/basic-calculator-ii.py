@@ -1,33 +1,22 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        res = 0
-        
-        prev = 0
-        op = '+'
-        curr = 0
-        
-        # Imagine we add a "0+" at the front of the expression
-        
+        stack = []
+        curr_num = 0
+        prev_op = "+"
         for i, c in enumerate(s):
             if c.isdigit():
-                curr = curr * 10 + int(c)
-            
-            if not c.isdigit() and not c.isspace() or i == len(s) - 1:
-                if op == "+":
-                    res += prev
-                    prev = curr
-                if op == "-":
-                    res += prev
-                    prev = -curr
-                if op == "*":
-                    prev *= curr
-                if op == "/":
-                    prev = int(prev / curr)
-                op = c
-                curr = 0
-            
-            print(c, res, prev, op, curr)
+                curr_num = curr_num * 10 + int(c)
+            if c in ['+', '-', '*', '/'] or i == len(s) - 1: 
+                if prev_op == '+':
+                    stack.append(curr_num) 
+                if prev_op == '-':
+                    stack.append(-curr_num)
+                if prev_op == '*':
+                    stack.append(stack.pop() * curr_num)
+                if prev_op == "/":
+                    stack.append(int(stack.pop() / curr_num))
+                curr_num = 0
+                prev_op = c
         
-        res += prev
-        print(prev, op, curr)
-        return res
+        return sum(stack)
+                    
