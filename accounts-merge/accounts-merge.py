@@ -1,40 +1,36 @@
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        def dfs(g, visited, root, ls):
-            if root in visited:
-                return
-            
-            visited.add(root)
-            ls.append(root)
-            
-            for linked_email in g[root]:
-                dfs(g, visited, linked_email, ls)
+        adj_list = defaultdict(list)
+        email_name_map = {}
         
-        g = defaultdict(list)
-        m = {}
         for account in accounts:
             name = account[0]
-            first_email = account[1]
-            if first_email not in g:
-                g[first_email] = []
-            if first_email not in m:
-                m[first_email] = name
+            email = account[1]
+            email_name_map[email] = name
+            
             for i in range(2, len(account)):
                 other_email = account[i]
-                g[first_email].append(other_email)
-                g[other_email].append(first_email)
+                email_name_map[other_email] = name
+                
+                adj_list[email].append(other_email)
+                adj_list[other_email].append(email)
         
         visited = set()
+        
+        def dfs(email, group):
+            visited.add(email)
+            group.append(email)
+            
+            for other_email in adj_list[email]:
+                if other_email not in visited:
+                    dfs(other_email, group)
+        
         ans = []
-        for email in g.keys():
+        for email, name in email_name_map.items():
             if email not in visited:
-                linked_emails = []
-                dfs(g, visited, email, linked_emails)
-                linked_emails.sort()
-                account = [m[email]]
-                account += linked_emails
-                ans.append(account)
-                
+                group = []
+                dfs(email, group)
+                group.sort()
+                ans.append([name] + group)
+        
         return ans
-                
-                
