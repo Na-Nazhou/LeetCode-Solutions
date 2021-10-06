@@ -9,39 +9,24 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         
         ans = None
-        def helper(root):
+        
+        def dfs(root):
             nonlocal ans
             
             if root is None:
-                return (False, False)
+                return 0
             
-            left = helper(root.left)
-            right = helper(root.right)
-            p_in_subtree = left[0] or right[0]
-            q_in_subtree = left[1] or right[1]
+            count = 0
+            if root == p or root == q:
+                count += 1
+            count += dfs(root.left)
+            count += dfs(root.right)
             
-            
-            if root == p:
-                if q_in_subtree:
-                    ans = root
-                    return (True, True)
-                else:
-                    return (True, False)
-            
-            if root == q:
-                if p_in_subtree:
-                    ans = root
-                    return (True, True)
-                else:
-                    return (False, True)
-            
-            if (left[0] and right[1]) or (left[1] and right[0]):
+            if count == 2 and ans is None:
                 ans = root
-                return (True, True)
             
-            return (p_in_subtree, q_in_subtree)
+            return count
         
-        helper(root)
+        dfs(root)
         
         return ans
-                
