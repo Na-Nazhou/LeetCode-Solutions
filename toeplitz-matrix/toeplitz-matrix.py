@@ -11,14 +11,13 @@ class Solution:
                 i += 1
                 j += 1
             return True
-            
-        for row in range(m):
-            if not check_diagonal(row, 0):
+        
+        for i in range(m):
+            if not check_diagonal(i, 0):
                 return False
         
-        for col in range(1, n):
-            if not check_diagonal(0, col):
+        for j in range(1, n):
+            if not check_diagonal(0, j):
                 return False
         
         return True
-                
