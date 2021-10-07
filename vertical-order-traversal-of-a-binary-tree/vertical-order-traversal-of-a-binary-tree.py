@@ -6,32 +6,32 @@
 #         self.right = right
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
-        m = defaultdict(dict)
-        q = deque()
-        if root is None:
-            return []
-        
-        q.append((root, (0, 0)))
-        while q:
-            size = len(q)
-            for _ in range(size):
-                node, pos = q.popleft()
-                if pos[0] not in m[pos[1]]:
-                    m[pos[1]][pos[0]] = []
-                m[pos[1]][pos[0]].append(node.val)
-                if node.left is not None:
-                    q.append((node.left, (pos[0] + 1, pos[1] - 1)))
-                if node.right is not None:
-                    q.append((node.right, (pos[0] + 1, pos[1] + 1)))
+        min_col = 0
+        max_col = 0
         
         ans = []
-        cols = sorted(m.keys())
-        for col in cols:
-            order = []
-            rows = sorted(m[col].keys())
-            for row in rows:
-                order += sorted(m[col][row])
-            ans.append(order)
+        if root is None:
+            return ans
+        
+        q = deque()
+        q.append((root, (0, 0)))
+        
+        nodes_by_col = defaultdict(list)
+        
+        while q:
+            node, [row, col] = q.popleft()
+            min_col = min(min_col, col)
+            max_col = max(max_col, col)
+            
+            nodes_by_col[col].append((row, node.val))
+            
+            if node.left:
+                q.append((node.left, (row + 1, col - 1)))
+            if node.right:
+                q.append((node.right, (row + 1, col + 1)))
+        
+        for col in range(min_col, max_col + 1):
+            if col in nodes_by_col:
+                ans.append([ val for _, val in sorted(nodes_by_col[col])])
         
         return ans
-                
