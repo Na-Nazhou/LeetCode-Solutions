@@ -4,23 +4,18 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         
-        first_decrease = None
-        for i in range(len(nums) - 1, 0, -1):
-            prev = nums[i - 1]
-            curr = nums[i]
-            
-            if prev < curr:
-                first_decrease = i - 1
+        pos = -1
+        for i in range(len(nums) - 2, -1, -1):
+            if nums[i] < nums[i + 1]:
+                pos = i
                 break
         
-        if first_decrease is None:
-            nums.reverse()
-            return
+        if pos != -1:
+            for i in range(len(nums) - 1, pos, -1):
+                if nums[i] > nums[pos]:
+                    nums[pos], nums[i] = nums[i], nums[pos]
+                    break
         
+        to_reverse = nums[pos + 1:]
+        nums[pos + 1:] = to_reverse[::-1]
         
-        for i in range(len(nums) - 1, first_decrease, -1):
-            if nums[i] > nums[first_decrease]:
-                nums[i], nums[first_decrease] = nums[first_decrease], nums[i]
-                break
-                
-        nums[first_decrease + 1:] = reversed(nums[first_decrease + 1:])
