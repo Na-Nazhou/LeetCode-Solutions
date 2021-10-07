@@ -1,16 +1,19 @@
 class Solution:
     def customSortString(self, order: str, s: str) -> str:
-        pq = []
-        ordering = defaultdict(int)
-        for i, c in enumerate(order):
-            ordering[c] = i
-        
+        counts = defaultdict(int)
         for c in s:
-            heapq.heappush(pq, (ordering[c], c))
+            counts[c] += 1
         
         res = []
-        while pq:
-            _, c = heapq.heappop(pq)
-            res.append(c)
+        for c in order:
+            if c in counts:
+                for _ in range(counts[c]):
+                    res.append(c)
+                del counts[c]
+        
+        for c, count in counts.items():
+            for _ in range(count):
+                res.append(c)
         
         return "".join(res)
+            
