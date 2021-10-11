@@ -1,20 +1,23 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        self.ans = [] 
-        self.combinationSumHelper(candidates, 0, target, [])
-        return self.ans
-    
-    def combinationSumHelper(self, candidates, i, target, combi):
-        if target == 0:
-            self.ans.append(combi[:])
-            return
         
-        if i >= len(candidates) or target < 0:
-            return
+        ans = []
+        def backtrack(i, curr, seq):
+            if curr > target:
+                return
+            
+            if curr == target:
+                ans.append(seq[:])
+                return
+            
+            if i == len(candidates):
+                return
+            
+            for j in range(i, len(candidates)):
+                seq.append(candidates[j])
+                backtrack(j, curr + candidates[j], seq)
+                seq.pop()
         
-
-        self.combinationSumHelper(candidates, i + 1, target, combi)
+        backtrack(0, 0, [])
         
-        combi.append(candidates[i])
-        self.combinationSumHelper(candidates, i, target - candidates[i], combi)
-        combi.pop()
+        return ans
