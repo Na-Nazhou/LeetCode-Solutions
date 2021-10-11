@@ -1,26 +1,32 @@
 class Solution:
     def reorganizeString(self, s: str) -> str:
         counts = defaultdict(int)
+        max_count = 0
+        max_char = None
         for c in s:
             counts[c] += 1
-        # [(-1, 'a')]
-        pq = [(-count, c) for c, count in counts.items() ] # max heap
-        heapq.heapify(pq) # O(n) - n: number of distinct characters
+            if counts[c] > max_count:
+                max_count = counts[c]
+                max_char = c
         
-        ans = [] # ['a', 'b', 'a']
-        freezed = None # [0, 'b']
-        while pq:
-            neg_count, c = heapq.heappop(pq)
-            ans.append(c)
-            neg_count += 1
-            
-            if freezed is not None and freezed[0] < 0:
-                heapq.heappush(pq, freezed)
-            
-            freezed = (neg_count, c)
-        
-        if freezed[0] < 0:
+        if max_count * 2 - 1 > len(s):
             return ""
         
-        return "".join(ans)
+        res = [None] * len(s)
+        idx = 0
+        while max_count > 0:
+            res[idx] = max_char
+            idx += 2
+            max_count -= 1
+        del counts[max_char]
+        
+        for c, count in counts.items():
+            while count > 0:
+                if idx >= len(s):
+                    idx = 1
+                res[idx] = c
+                count -= 1
+                idx += 2
+        
+        return "".join(res)
         
