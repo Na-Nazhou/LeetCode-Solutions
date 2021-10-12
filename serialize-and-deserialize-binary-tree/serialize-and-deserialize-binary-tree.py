@@ -13,17 +13,18 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
+        
         res = []
-        def helper(root):
+        def dfs(root):
             if root is None:
                 res.append("None")
                 return
             
             res.append(str(root.val))
-            helper(root.left)
-            helper(root.right)
+            dfs(root.left)
+            dfs(root.right)
         
-        helper(root)
+        dfs(root)
         
         return ",".join(res)
         
@@ -34,21 +35,25 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        res = data.split(",")
-        q = deque(res)
         
-        def helper():
-            val = q.popleft()
+        data = data.split(",")
+        
+        ptr = 0
+        def dfs():
+            nonlocal ptr
+            val = data[ptr]
+            ptr += 1
+            
             if val == "None":
                 return None
             
             root = TreeNode(int(val))
-            root.left = helper()
-            root.right = helper()
+            root.left = dfs()
+            root.right = dfs()
             
             return root
-        
-        return helper()
+    
+        return dfs()
         
 
 # Your Codec object will be instantiated and called as such:
