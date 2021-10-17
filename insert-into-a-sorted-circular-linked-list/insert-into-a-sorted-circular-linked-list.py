@@ -8,26 +8,34 @@ class Node:
 
 class Solution:
     def insert(self, head: 'Node', insertVal: int) -> 'Node':
-        if head is None:
-            head = Node(insertVal)
-            head.next = head
-            return head
         
-        curr = head
-        while curr.next:
-            if curr.next.val < curr.val: # tail
-                if insertVal >= curr.val or insertVal <= curr.next.val:
-                    node = Node(insertVal)
-                    node.next = curr.next
-                    curr.next = node
-                    break
-                    
-            if curr.val < insertVal and curr.next.val >= insertVal or (curr.next == head):
-                node = Node(insertVal)
-                node.next = curr.next
-                curr.next = node
+        # empty
+        # x -> insertVal -> y (x <= y)
+        # x -> insertVal (tail)
+        # insertVal -> x (head)
+        
+        node = Node(insertVal)
+        
+        if head is None:
+            node.next = node
+            return node
+        
+        curr = None
+        while curr != head:
+            if curr is None:
+                curr = head
+            
+            if insertVal >= curr.val and insertVal <= curr.next.val:
                 break
                 
+            if curr.val > curr.next.val and (insertVal >= curr.val or insertVal <= curr.next.val):
+                break
+            
             curr = curr.next
         
+        # Insert after curr
+        node.next = curr.next
+        curr.next = node
+        
         return head
+            
