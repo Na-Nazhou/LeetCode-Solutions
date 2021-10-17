@@ -1,23 +1,36 @@
 class Solution:
     def validWordAbbreviation(self, word: str, abbr: str) -> bool:
-        i = 0
-        length = 0
-        for c in abbr:
-            if c.isdigit():
-                
-                # Leading zero
-                if length == 0 and int(c) == 0:
+        
+        word_ptr = 0
+        abbr_ptr = 0
+        while abbr_ptr < len(abbr) and word_ptr < len(word):
+            print(abbr_ptr, word_ptr)
+            
+            c = abbr[abbr_ptr]
+            if not c.isdigit():
+                if c != word[word_ptr]:
                     return False
                 
-                length = length * 10 + int(c)
-            else:
-                i += length
-                length = 0
-                if i >= len(word) or word[i] != c:
+                abbr_ptr += 1
+                word_ptr += 1
+                continue
+            
+            curr = 0
+            while abbr_ptr < len(abbr):
+                c = abbr[abbr_ptr]
+                if not c.isdigit():
+                    break
+                
+                digit = int(c)
+                if curr == 0 and digit == 0: # leading zero
                     return False
-                i += 1
+                
+                curr = curr * 10 + digit
+                abbr_ptr += 1
+            
+            word_ptr += curr
         
-        if length > 0:
-            i += length
-        
-        return i == len(word)
+        return abbr_ptr == len(abbr) and word_ptr == len(word)
+                
+            
+            
