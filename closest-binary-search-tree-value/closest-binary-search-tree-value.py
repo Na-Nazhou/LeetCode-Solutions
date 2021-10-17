@@ -7,25 +7,23 @@
 class Solution:
     def closestValue(self, root: Optional[TreeNode], target: float) -> int:
         
-        ans = None
-        def helper(root):
+        ans = root.val
+        def dfs(root):
             nonlocal ans
             
             if root is None:
                 return
             
+            if abs(root.val - target) < abs(ans - target):
+                ans = root.val
+            
             if root.val == target:
-                ans = root.val
                 return
-            
-            if target > root.val:
-                helper(root.right)
+            elif root.val < target:
+                dfs(root.right)
             else:
-                helper(root.left)
-            
-            if ans is None or abs(root.val - target) < abs(ans - target):
-                ans = root.val
+                dfs(root.left)
         
-        helper(root)
+        dfs(root)
         
         return ans
