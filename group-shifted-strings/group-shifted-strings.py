@@ -1,13 +1,14 @@
 class Solution:
     def groupStrings(self, strings: List[str]) -> List[List[str]]:
-        m = defaultdict(list)
-        for string in strings:
-            h = []
-            for i in range(1, len(string)):
-                prev = string[i - 1]
-                curr = string[i]
-                gap = (ord(curr) - ord(prev) + 26) % 26
-                h.append(gap)
-            m[tuple(h)].append(string)
+        groups = defaultdict(list)
         
-        return list(m.values())
+        for string in strings:
+            shifted = []
+            to_shift = ord('z') - ord(string[0])
+            for c in string:
+                shifted_c = chr(ord('a') + (ord(c) - ord('a') + to_shift) % 26)
+                shifted.append(shifted_c)
+            
+            groups["".join(shifted)].append(string)
+        
+        return list(groups.values())
