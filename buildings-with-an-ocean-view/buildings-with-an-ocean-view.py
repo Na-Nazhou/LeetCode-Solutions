@@ -1,13 +1,9 @@
 class Solution:
     def findBuildings(self, heights: List[int]) -> List[int]:
-        ans = []
-        curr_max = -float("inf")
-        for i in range(len(heights) - 1, -1, -1):
-            height = heights[i]
-            if height > curr_max:
-                ans.append(i)
-                curr_max = max(curr_max, height)
-                
-        ans.reverse()
+        stack = []
+        for i, height in enumerate(heights):
+            while stack and heights[stack[-1]] <= height:
+                stack.pop()
+            stack.append(i)
         
-        return ans
+        return stack
