@@ -6,29 +6,31 @@
 #         self.right = right
 class Solution:
     def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        res = []
         if root is None:
-            return res
+            return []
         
-        m = defaultdict(list)
-        pq = deque()
-        pq.append((root, (0, 0)))
+        by_cols = defaultdict(list)
+        
+        q = deque()
+        q.append((root, 0))
+        
         min_col = 0
         max_col = 0
         
-        while pq:
-            node, pos = pq.popleft()
-            m[pos[1]].append((pos[0], len(m[pos[1]]), node.val))
-            min_col = min(min_col, pos[1])
-            max_col = max(max_col, pos[1])
+        while q:
+            node, col = q.popleft()
+            by_cols[col].append(node.val)
+            min_col = min(min_col, col)
+            max_col = max(max_col, col)
             
             if node.left is not None:
-                pq.append((node.left, (pos[0] + 1, pos[1] - 1)))
+                q.append((node.left, col - 1))
             if node.right is not None:
-                pq.append((node.right, (pos[0] + 1, pos[1] + 1)))
+                q.append((node.right, col + 1))
         
+        res = []
         for col in range(min_col, max_col + 1):
-            if col in m:
-                res.append([ val for _, _, val in sorted(m[col])])
+            if col in by_cols:
+                res.append(by_cols[col])
         
         return res
