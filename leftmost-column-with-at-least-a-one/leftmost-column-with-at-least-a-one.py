@@ -8,33 +8,19 @@
 
 class Solution:
     def leftMostColumnWithOne(self, binaryMatrix: 'BinaryMatrix') -> int:
-        r, c = binaryMatrix.dimensions()
-    
-        def leftMostColWithOneInRow(row):
-            start = 0
-            end = c - 1
-            while start <= end:
-                mid = (start + end) // 2
-                if binaryMatrix.get(row, mid) == 0:
-                    start = mid + 1
-                else:
-                    if mid == 0 or binaryMatrix.get(row, mid - 1) == 0:
-                        return mid
-                    else:
-                        end = mid - 1
-            
-            return None
+        m, n = binaryMatrix.dimensions()
+        i = 0
+        j = n - 1
         
-        ans = None
-        for row in range(r):
-            col = leftMostColWithOneInRow(row)
-            if col is None:
-                continue
-            if ans is None:
-                ans = c
-            ans = min(ans, col)
+        ans = n
+        while i < m and j >= 0:
+            if binaryMatrix.get(i, j) == 1:
+                ans = min(ans, j)
+                j -= 1
+            else:
+                i += 1
         
-        if ans is None:
+        if ans == n:
             return -1
-        else:
-            return ans
+        
+        return ans
